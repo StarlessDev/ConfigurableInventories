@@ -32,14 +32,12 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
 
     protected G gui;
     protected ConfigurableInventory inventory;
-    protected final Set<UUID> viewers;
 
     private final Property<ConfigurableInventory> property;
     private final Map<Character, List<ItemPlaceholder>> placeholders = new HashMap<>();
 
     public GenericInventory(final Property<ConfigurableInventory> property) {
         this.property = property;
-        this.viewers = new HashSet<>();
     }
 
     /**
@@ -185,19 +183,6 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
     }
 
     /**
-     * Reopens the inventory for all current viewers.
-     * This is useful when the inventory content has changed and needs to be refreshed.
-     */
-    public void reopen() {
-        this.viewers.forEach(uuid -> {
-            final Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                this.show(player);
-            }
-        });
-    }
-
-    /**
      * Shows the inventory to the specified player.
      * This method compiles the GUI, creates the window, and opens it for the player.
      *
@@ -211,9 +196,7 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
         final Window.Builder.Normal.Single window = Window.single()
                 .setViewer(player)
                 .setTitle(ColorUtils.section(this.compileTitle()))
-                .setGui(this.gui)
-                .addOpenHandler(() -> this.viewers.add(player.getUniqueId()))
-                .addCloseHandler(() -> this.viewers.remove(player.getUniqueId()));
+                .setGui(this.gui);
         this.compileWindow(player, window);
 
         window.build().open();

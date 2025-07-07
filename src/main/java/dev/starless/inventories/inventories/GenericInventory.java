@@ -201,4 +201,13 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
 
         window.build().open();
     }
+
+    /**
+     * Closes the inventory for every player.
+     */
+    public void closeForAllViewers() {
+        if (gui != null) {
+            gui.closeForAllViewers();
+        }
+    }
 }

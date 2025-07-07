@@ -33,8 +33,8 @@ public class ItemPlaceholder {
      * @return the processed string with the placeholder replaced
      */
     public String apply(final String input) {
-        return Pattern.compile("(?i)" + this.prefix + target + this.suffix)
+        return Pattern.compile("(?i)" + this.prefix + Pattern.quote(target) + this.suffix)
                 .matcher(input)
-                .replaceAll(Objects.toString(replacement));
+                .replaceAll(Matcher.quoteReplacement(Objects.toString(replacement)));
     }
 }

@@ -41,13 +41,21 @@ public abstract class PagedInventory extends GenericInventory<PagedGui<Item>, Pa
     protected abstract List<Item> getContent(@Nullable final Player viewer);
 
     /**
+     * Calls {@link #updateItems(Player)} with a null player.
+     * See such method for more details.
+     */
+    public void updateItems() {
+        this.updateItems(null);
+    }
+
+    /**
      * Updates the items in the paged GUI using
      * the items provided by {@link #getContent(Player)}.
      * and rebakes it to reflect changes.
      */
-    public void updateItems() {
+    public void updateItems(@Nullable final Player viewer) {
         final PagedGui<Item> gui = this.gui;
-        gui.setContent(this.getContent());
+        gui.setContent(this.getContent(viewer));
         gui.bake();
     }
 }

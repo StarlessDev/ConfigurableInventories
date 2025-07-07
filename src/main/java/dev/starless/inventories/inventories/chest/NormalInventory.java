@@ -5,6 +5,9 @@ import dev.starless.inventories.ConfigurableInventory;
 import dev.starless.inventories.inventories.GenericInventory;
 import xyz.xenondevs.invui.gui.Gui;
 
+/**
+ * Abstract base class for normal (non-paged) chest inventories.
+ */
 public abstract class NormalInventory extends GenericInventory<Gui, Gui.Builder.Normal> {
 
     public NormalInventory(Property<ConfigurableInventory> inventory) {

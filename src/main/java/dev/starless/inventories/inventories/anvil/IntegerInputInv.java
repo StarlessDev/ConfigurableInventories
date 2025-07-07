@@ -4,6 +4,9 @@ import dev.starless.inventories.inventories.AnvilInventory;
 
 import java.util.Optional;
 
+/**
+ * Abstract base class for anvil inventories that accept integer input from players.
+ */
 public abstract class IntegerInputInv extends AnvilInventory<Integer> {
 
     @Override

@@ -9,23 +9,61 @@ import xyz.xenondevs.invui.window.AnvilWindow;
 
 import java.util.Optional;
 
+/**
+ * Abstract base class for creating anvil-based input GUI inventories.
+ *
+ * @param <T> the type of value expected from the player input
+ */
 public abstract class AnvilInventory<T> {
 
+    /**
+     * Called when the player provides valid input through the anvil interface.
+     *
+     * @param player the player who provided the input
+     * @param value the parsed value from the player's input
+     */
     public abstract void onInput(final Player player, final T value);
 
+    /**
+     * Maps the raw string input from the anvil to the expected type.
+     *
+     * @param input the raw string input from the player
+     * @return an Optional containing the parsed value if valid, empty otherwise
+     */
     public abstract Optional<T> map(final String input);
 
+    /**
+     * Called when the anvil window is closed.
+     * Default implementation does nothing, can be overridden for custom behavior.
+     */
     public void onClose() {
     }
 
+    /**
+     * Gets the title displayed on the anvil window.
+     * You can override this method to customize the title.
+     *
+     * @return the title text for the anvil window
+     */
     public String getAnvilTitle() {
         return "Scrivi";
     }
 
+    /**
+     * Gets the placeholder text displayed in the anvil input field.
+     * You can override this method to customize the placeholder text.
+     *
+     * @return the placeholder text for the anvil input
+     */
     public String getAnvilPlaceholder() {
         return "Scrivi qua";
     }
 
+    /**
+     * Opens the anvil input interface for the specified player.
+     *
+     * @param player the player to show the anvil interface to
+     */
     public void askForInput(Player player) {
         final AnvilUpdatingItem outputItem = new OutputItem(this.getAnvilPlaceholder());
         final AnvilWindow window = AnvilWindow.single()

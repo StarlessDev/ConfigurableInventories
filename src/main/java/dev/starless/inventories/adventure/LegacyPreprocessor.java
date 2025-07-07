@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A preprocessor for legacy color codes and formatting codes used in Minecraft.
+ * This class converts legacy color codes (like &a, §b, etc.) and hex colors
+ * (like &#RRGGBB) into minimessage's format.
+ */
 public class LegacyPreprocessor {
 
     @Getter

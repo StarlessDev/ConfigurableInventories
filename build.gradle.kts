@@ -27,6 +27,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = "inventories"
+
             from(components["java"])
         }
     }
@@ -43,4 +44,7 @@ dependencies {
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+
+    withJavadocJar()
+    withSourcesJar()
 }

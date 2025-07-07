@@ -7,10 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Utility class to provide support for
- * every possible color formatting type:
- * section ({@code §}), ampersand ({@code &})
- * and <a href="https://docs.advntr.dev/minimessage/index.html">minimessage</a>.
+ * Utility class to provide support for color formats.
  */
 
 @UtilityClass

@@ -9,8 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * A preprocessor for legacy color codes and formatting codes used in Minecraft.
- * This class converts legacy color codes (like &a, §b, etc.) and hex colors
- * (like &#RRGGBB) into minimessage's format.
+ * This class converts legacy color codes (with both ampersand and section) into minimessage's format.
  */
 public class LegacyPreprocessor {
 

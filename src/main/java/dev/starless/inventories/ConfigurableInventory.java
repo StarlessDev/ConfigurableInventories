@@ -17,10 +17,6 @@ import java.util.*;
 @Getter
 public class ConfigurableInventory {
 
-    private ConfigurableInventory() {
-        // This class can only be instantiated through the builder
-    }
-
     public static Builder builder() {
         return new Builder();
     }

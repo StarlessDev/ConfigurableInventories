@@ -45,7 +45,7 @@ public abstract class PagedInventory extends GenericInventory<PagedGui<Item>, Pa
      * the items provided by {@link #getContent(Player)}.
      * and rebakes it to reflect changes.
      */
-    protected void updateItems() {
+    public void updateItems() {
         final PagedGui<Item> gui = this.gui;
         gui.setContent(this.getContent());
         gui.bake();

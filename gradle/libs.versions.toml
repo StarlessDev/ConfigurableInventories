@@ -1,0 +1,26 @@
+metadata.format.version = "1.1"
+
+[versions]
+
+# CompileOnly dependencies
+paper = "1.21.4-R0.1-SNAPSHOT"
+configme = "1.4.1"
+
+# Implementation dependencies
+invui = "1.46"
+
+# Gradle Plugins
+lombok = "8.11"
+
+[libraries]
+
+# CompileOnly Dependencies
+paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+configme = { group = "ch.jalu", name = "configme", version.ref = "configme" }
+
+# Implementation dependencies
+invui = { group = "xyz.xenondevs.invui", name = "invui", version.ref = "invui" }
+
+[plugins]
+
+lombok = { id = "io.freefair.lombok", version.ref = "lombok"}

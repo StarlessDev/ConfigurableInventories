@@ -266,6 +266,23 @@ public class ConfigurableItem {
         return new SimpleItem(this.asItemStack(placeholders));
     }
 
+    /**
+     * Creates a copy of this item.
+     * The copy will have the same material, display name, lore, flags, amount and custom model data.
+     *
+     * @return a new {@link ConfigurableItem} instance with the same properties
+     */
+    public ConfigurableItem copy() {
+        return ConfigurableItem.builder()
+                .material(this.getMaterial())
+                .name(this.getDisplayName())
+                .lore(this.getLore().toArray(new String[0]))
+                .flags(this.getFlags().toArray(new ItemFlag[0]))
+                .amount(this.getAmount())
+                .modelData(this.getCustomModelData())
+                .build();
+    }
+
     private Component processString(List<ItemPlaceholder> placeholders, String str) {
         for (ItemPlaceholder placeholder : placeholders) {
             str = placeholder.apply(str);

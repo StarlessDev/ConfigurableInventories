@@ -86,6 +86,6 @@ public class ConfigurableInventory {
      * @return the {@link ConfigurableItem} associated with the key or null if not found
      */
     public ConfigurableItem getItem(char character) {
-        return items.get(String.valueOf(character));
+        return items.get(String.valueOf(character)).copy();
     }
 }

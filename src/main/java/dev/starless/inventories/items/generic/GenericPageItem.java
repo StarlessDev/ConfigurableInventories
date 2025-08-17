@@ -9,7 +9,7 @@ import xyz.xenondevs.invui.item.impl.controlitem.PageItem;
 
 public class GenericPageItem extends PageItem {
 
-    private final ConfigurableItem item;
+    protected final ConfigurableItem item;
     private final Type type;
 
     public GenericPageItem(final ConfigurableItem item, final Type type) {

@@ -6,8 +6,10 @@ import dev.starless.inventories.ConfigurableInventory;
 import dev.starless.inventories.ConfigurableItem;
 import dev.starless.inventories.ItemClick;
 import dev.starless.inventories.adventure.ColorUtils;
+import dev.starless.inventories.errors.GenericError;
 import dev.starless.inventories.items.generic.GenericItem;
 import dev.starless.inventories.items.placeholders.ItemPlaceholder;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -32,12 +34,15 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
 
     protected G gui;
     protected ConfigurableInventory inventory;
+    @Setter
+    private GenericError error;
 
     private final Property<ConfigurableInventory> property;
     private final Map<Character, List<ItemPlaceholder>> placeholders = new HashMap<>();
 
     public GenericInventory(final Property<ConfigurableInventory> property) {
         this.property = property;
+        this.error = null;
     }
 
     /**
@@ -183,6 +188,15 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
     }
 
     /**
+     * Checks if there was an error loading or configuring the inventory.
+     *
+     * @return {@link Boolean}
+     */
+    public boolean hasError() {
+        return error != null;
+    }
+
+    /**
      * Shows the inventory to the specified player.
      * This method compiles the GUI, creates the window, and opens it for the player.
      *
@@ -199,7 +213,14 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
                 .setGui(this.gui);
         this.compileWindow(player, window);
 
-        window.build().open();
+        if (this.hasError()) {
+            final String message = error.message();
+            if (message != null) {
+                player.sendMessage(ColorUtils.component(message));
+            }
+        } else {
+            window.build().open();
+        }
     }
 
     /**

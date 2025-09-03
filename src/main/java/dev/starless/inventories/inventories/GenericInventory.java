@@ -19,6 +19,8 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.Click;
 import xyz.xenondevs.invui.window.Window;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -36,6 +38,9 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
     protected ConfigurableInventory inventory;
     @Setter
     private GenericError error;
+    @Setter
+    private Duration clickCooldown;
+    private Instant lastClick;
 
     private final Property<ConfigurableInventory> property;
     private final Map<Character, List<ItemPlaceholder>> placeholders = new HashMap<>();
@@ -43,6 +48,8 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
     public GenericInventory(final Property<ConfigurableInventory> property) {
         this.property = property;
         this.error = null;
+        this.clickCooldown = Duration.ZERO;
+        this.lastClick = Instant.EPOCH;
     }
 
     /**
@@ -194,6 +201,28 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
      */
     public boolean hasError() {
         return error != null;
+    }
+
+    /**
+     * Registers a click event, updating the last click timestamp.
+     * This is used for implementing click cooldowns.
+     */
+    public void registerClick() {
+        this.lastClick = Instant.now();
+    }
+
+    /**
+     * Checks if the player is currently on cooldown
+     * and cannot click until it expires.
+     *
+     * @return true if the player is on cooldown, false otherwise
+     */
+    public boolean isClickOnCooldown() {
+        if (clickCooldown.isZero() || clickCooldown.isNegative()) {
+            return false;
+        }
+
+        return Duration.between(lastClick, Instant.now()).compareTo(clickCooldown) < 0;
     }
 
     /**

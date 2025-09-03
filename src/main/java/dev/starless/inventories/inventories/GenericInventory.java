@@ -218,9 +218,13 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
             if (message != null) {
                 player.sendMessage(ColorUtils.component(message));
             }
-        } else {
-            window.build().open();
+
+            if (error.forceClose()) {
+                return;
+            }
         }
+
+        window.build().open();
     }
 
     /**

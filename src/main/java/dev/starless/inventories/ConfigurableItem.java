@@ -9,13 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.*;
 
 /**
  * Represents an item you can use in guis.
- * Can be converted to an {@link ItemStack} or an InvUI {@link ItemProvider}.
+ * Can be converted to an {@link ItemStack}.
  * <br>
  * You can edit this item by calling {@link ConfigurableItem#edit()} or
  * just using the setters.

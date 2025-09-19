@@ -3,7 +3,8 @@ package dev.starless.inventories;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a configurable inventory that can be used
@@ -41,22 +42,9 @@ public class ConfigurableInventory {
         }
 
         /**
-         * Sets the structure of the inventory using multiple lines.
-         * This will clear any previously set structure.
-         *
-         * @param lines the structure lines representing the inventory layout
-         * @return this builder
-         */
-        public Builder structure(final String... lines) {
-            inventory.getStructure().clear();
-            inventory.getStructure().addAll(Arrays.asList(lines));
-            return this;
-        }
-
-        /**
          * Adds an item to the inventory with the specified key.
          *
-         * @param key the key to associate with the item (typically a single character)
+         * @param key  the key to associate with the item (typically a single character)
          * @param item the {@link ConfigurableItem} to add
          * @return this builder
          */
@@ -76,7 +64,6 @@ public class ConfigurableInventory {
     }
 
     private Map<String, ConfigurableItem> items = new HashMap<>();
-    private List<String> structure = new ArrayList<>();
     private String title;
 
     /**

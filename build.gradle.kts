@@ -12,7 +12,6 @@ version = "1.21.8"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.xenondevs.xyz/releases")
 }
 
 publishing {
@@ -26,7 +25,7 @@ publishing {
 
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "inventories"
+            artifactId = "inventories-folia"
 
             from(components["java"])
         }
@@ -38,8 +37,6 @@ dependencies {
 
     // Configuration library
     api(libs.configme)
-    // Inventory UI library
-    api(libs.invui)
 }
 
 java {

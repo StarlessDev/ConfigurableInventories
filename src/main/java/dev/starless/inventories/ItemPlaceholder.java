@@ -1,10 +1,9 @@
-package dev.starless.inventories.items.placeholders;
+package dev.starless.inventories;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.bukkit.ChatColor;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

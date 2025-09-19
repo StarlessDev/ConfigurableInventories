@@ -1,4 +1,4 @@
-package dev.starless.inventories.items.config;
+package dev.starless.inventories.config;
 
 import ch.jalu.configme.beanmapper.DefaultMapper;
 import ch.jalu.configme.beanmapper.Mapper;

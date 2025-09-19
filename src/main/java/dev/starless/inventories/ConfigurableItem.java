@@ -1,7 +1,6 @@
 package dev.starless.inventories;
 
 import dev.starless.inventories.adventure.ColorUtils;
-import dev.starless.inventories.items.placeholders.ItemPlaceholder;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -10,10 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemProvider;
-import xyz.xenondevs.invui.item.ItemWrapper;
-import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.util.*;
 
@@ -196,26 +192,6 @@ public class ConfigurableItem {
     }
 
     /**
-     * Converts this object to an {@link ItemProvider}
-     * without applying placeholders.
-     *
-     * @return the resulting {@link ItemProvider} object
-     */
-    public ItemProvider asItemProvider() {
-        return this.asItemProvider(Collections.emptyList());
-    }
-
-    /**
-     * Converts this object to an {@link ItemProvider} applying the provided placeholders.
-     *
-     * @param placeholders list of {@link ItemPlaceholder} to apply
-     * @return the resulting {@link ItemProvider} object
-     */
-    public ItemProvider asItemProvider(List<ItemPlaceholder> placeholders) {
-        return new ItemWrapper(this.asItemStack(placeholders));
-    }
-
-    /**
      * Converts this object to an {@link ItemStack}
      * without applying placeholders.
      *
@@ -243,27 +219,6 @@ public class ConfigurableItem {
             }
         });
         return is;
-    }
-
-    /**
-     * Converts this object to an {@link Item}
-     * without replacing placeholders.
-     *
-     * @return the resulting {@link Item} object
-     */
-    public Item asSimpleItem() {
-        return this.asSimpleItem(Collections.emptyList());
-    }
-
-    /**
-     * Converts this object to an {@link Item}
-     * applying the provided placeholders.
-     *
-     * @param placeholders list of {@link ItemPlaceholder} to apply
-     * @return the resulting {@link Item} object
-     */
-    public Item asSimpleItem(List<ItemPlaceholder> placeholders) {
-        return new SimpleItem(this.asItemStack(placeholders));
     }
 
     /**

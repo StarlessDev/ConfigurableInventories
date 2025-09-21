@@ -33,7 +33,7 @@ public class ConfigurableItem {
      * @param item the {@link ItemStack} to convert
      * @return a new {@link ConfigurableItem} instance
      */
-    public ConfigurableItem fromItemStack(final ItemStack item) {
+    public static ConfigurableItem fromItemStack(final ItemStack item) {
         final ConfigurableItem.Builder builder = ConfigurableItem.builder()
                 .material(item.getType())
                 .amount(item.getAmount());

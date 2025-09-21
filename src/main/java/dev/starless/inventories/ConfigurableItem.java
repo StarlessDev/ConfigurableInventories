@@ -8,6 +8,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -23,6 +24,31 @@ import java.util.*;
 @Setter
 @Getter
 public class ConfigurableItem {
+
+    /**
+     * Creates a ConfigurableItem from an ItemStack.
+     * Note that this will not copy all the data from the ItemStack,
+     * only the material, amount, display name, lore, item flags and custom model data.
+     *
+     * @param item the {@link ItemStack} to convert
+     * @return a new {@link ConfigurableItem} instance
+     */
+    public ConfigurableItem fromItemStack(final ItemStack item) {
+        final ConfigurableItem.Builder builder = ConfigurableItem.builder()
+                .material(item.getType())
+                .amount(item.getAmount());
+
+        if (item.hasItemMeta()) {
+            final ItemMeta meta = item.getItemMeta();
+            final List<Component> components = Objects.requireNonNullElse(meta.lore(), Collections.emptyList());
+            builder.lore(components.stream().map(ColorUtils::string).toList())
+                    .modelData(meta.getCustomModelData());
+
+            meta.getItemFlags().forEach(builder::addFlag);
+        }
+
+        return builder.build();
+    }
 
     /**
      * Returns a ConfigurableItem builder class.

@@ -31,6 +31,14 @@ public class ColorUtils {
         return minimessage.deserialize(message);
     }
 
+    public String string(@Nullable final Component component) {
+        if (component == null) {
+            return "";
+        }
+
+        return minimessage.serialize(component);
+    }
+
     /**
      * Get a legacy string from a component, respecting color codes.
      *

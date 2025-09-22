@@ -270,7 +270,7 @@ public class ConfigurableItem {
             meta.addItemFlags(flags.toArray(ItemFlag[]::new));
 
             enchantments.forEach((ench, level) -> {
-                meta.addEnchant(ench, Math.max(0, level - 1), true);
+                meta.addEnchant(ench, level, true);
             });
 
             if (customModelData != -1) {

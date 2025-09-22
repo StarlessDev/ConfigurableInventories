@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -128,6 +129,32 @@ public class ConfigurableItem {
             return this;
         }
 
+        /***
+         * Adds a new enchantment to the item.
+         *
+         * @param enchantment the {@link Enchantment} to add
+         * @param level       the level of the enchantment (must be greater than 0)
+         * @return this builder
+         */
+        public Builder addEnchantment(final Enchantment enchantment, final int level) {
+            item.getEnchantments().put(enchantment, level);
+            return this;
+        }
+
+        /**
+         * Sets the enchantments of the item.
+         * This will erase any enchantments set previously!
+         * The level of an enchantment must be greater than 0.
+         *
+         * @param enchantments new enchantments map
+         * @return this builder
+         */
+        public Builder enchantments(final Map<Enchantment, Integer> enchantments) {
+            item.getEnchantments().clear();
+            item.getEnchantments().putAll(enchantments);
+            return this;
+        }
+
         /**
          * Adds a new {@link ItemFlag} to the item.
          *
@@ -195,6 +222,7 @@ public class ConfigurableItem {
 
     private @NotNull Material material;
     private @NotNull String displayName;
+    private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
 
@@ -212,6 +240,7 @@ public class ConfigurableItem {
                 .name(this.getDisplayName())
                 .lore(this.getLore().toArray(new String[0]))
                 .flags(this.getFlags().toArray(new ItemFlag[0]))
+                .enchantments(this.getEnchantments())
                 .amount(this.getAmount())
                 .modelData(this.getCustomModelData());
     }
@@ -238,6 +267,10 @@ public class ConfigurableItem {
             meta.displayName(this.processString(placeholders, displayName));
             meta.lore(lore.stream().map(str -> this.processString(placeholders, str)).toList());
             meta.addItemFlags(flags.toArray(ItemFlag[]::new));
+
+            enchantments.forEach((ench, level) -> {
+                meta.addEnchant(ench, Math.max(0, level - 1), true);
+            });
 
             if (customModelData != -1) {
                 meta.setCustomModelData(customModelData);

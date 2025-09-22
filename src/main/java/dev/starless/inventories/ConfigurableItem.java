@@ -37,7 +37,8 @@ public class ConfigurableItem {
     public static ConfigurableItem fromItemStack(final ItemStack item) {
         final ConfigurableItem.Builder builder = ConfigurableItem.builder()
                 .material(item.getType())
-                .amount(item.getAmount());
+                .amount(item.getAmount())
+                .enchantments(item.getEnchantments());
 
         if (item.hasItemMeta()) {
             final ItemMeta meta = item.getItemMeta();

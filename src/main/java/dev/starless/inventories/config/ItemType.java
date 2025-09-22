@@ -8,6 +8,7 @@ import dev.starless.inventories.ConfigurableItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,6 +66,20 @@ public class ItemType implements PropertyType<ConfigurableItem> {
                 item.setFlags(flags);
             });
 
+            // Set enchantments
+            this.readMapProperty(map.get("enchantments"), stringObjectMap -> {
+                final Map<Enchantment, Integer> enchantments = new HashMap<>();
+                stringObjectMap.forEach((key, value) -> {
+                    if (value instanceof Integer level) {
+                        final Enchantment enchantment = Registry.ENCHANTMENT.get(NamespacedKey.minecraft(key.toLowerCase()));
+                        if (enchantment != null) {
+                            enchantments.put(enchantment, level);
+                        }
+                    }
+                });
+                item.setEnchantments(enchantments);
+            });
+
             return item;
         }
 
@@ -84,6 +99,18 @@ public class ItemType implements PropertyType<ConfigurableItem> {
                     })
                     .filter(Objects::nonNull)
                     .toList());
+        }
+    }
+
+    private void readMapProperty(final Object o, final Consumer<Map<String, Object>> action) {
+        if (o instanceof Map<?, ?> map) {
+            final Map<String, Object> newMap = new HashMap<>();
+            map.forEach((key, value) -> {
+                if (key instanceof String s) {
+                    newMap.put(s, value);
+                }
+            });
+            action.accept(newMap);
         }
     }
 
@@ -138,6 +165,18 @@ public class ItemType implements PropertyType<ConfigurableItem> {
         final Object exportedFlags = mapper.toExportValue(item.getFlags());
         if (exportedFlags != null) {
             map.put("flags", exportedFlags);
+        }
+
+        final Map<String, Integer> enchantments = new HashMap<>();
+        if (item.getEnchantments() != null) {
+            item.getEnchantments().forEach((enchantment, level) -> {
+                //noinspection deprecation
+                enchantments.put(enchantment.getKey().getKey(), level);
+            });
+        }
+
+        if (!enchantments.isEmpty()) {
+            map.put("enchantments", enchantments);
         }
 
         return map;

@@ -22,8 +22,8 @@ public class ItemPlaceholder {
     private final String target;
     private final Object replacement;
 
-    private String prefix = "\\{";
-    private String suffix = "}";
+    private String prefix = "%";
+    private String suffix = "%";
 
     /**
      * Applies the placeholder replacement to the given input string.

@@ -26,6 +26,9 @@ import java.util.*;
 @Getter
 public class ConfigurableItem {
 
+    public static final int DEFAULT_AMOUNT = 1;
+    public static final int DEFAULT_CUSTOM_MODEL_DATA = -1;
+
     /**
      * Creates a ConfigurableItem from an ItemStack.
      * Note that this will not copy all the data from the ItemStack,
@@ -185,7 +188,7 @@ public class ConfigurableItem {
          * @param flags new {@link ItemFlag} list
          * @return this builder
          */
-        public Builder flags(final List<ItemFlag> flags) {
+        public Builder flags(final Collection<ItemFlag> flags) {
             item.getFlags().clear();
             item.getFlags().addAll(flags);
             return this;
@@ -227,8 +230,8 @@ public class ConfigurableItem {
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
 
-    private int amount = 1;
-    private int customModelData = -1;
+    private int amount = DEFAULT_AMOUNT;
+    private int customModelData = DEFAULT_CUSTOM_MODEL_DATA;
 
     /**
      * Returns a builder for modifying this object.

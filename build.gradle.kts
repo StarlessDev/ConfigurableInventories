@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.starless"
-version = "1.22"
+version = "1.23"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ publishing {
 
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "inventories-folia"
+            artifactId = "inventories-configurate"
 
             from(components["java"])
         }
@@ -34,9 +34,7 @@ publishing {
 
 dependencies {
     compileOnly(libs.paper)
-
-    // Configuration library
-    api(libs.configme)
+    compileOnly(libs.configurate)
 }
 
 java {

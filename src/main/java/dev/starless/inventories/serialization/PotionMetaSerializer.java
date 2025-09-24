@@ -34,18 +34,7 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
         }
 
         final String customPotionName = node.node(CUSTOM_POTION_NAME).getString();
-        String colorString = node.node(COLOR).getString();
-        Color color = null;
-        if (colorString != null) {
-            if (colorString.startsWith("#")) {
-                colorString = colorString.substring(1);
-            }
-            try {
-                color = Color.fromRGB(Integer.parseInt(colorString, 16));
-            } catch (NumberFormatException e) {
-                throw new SerializationException("Invalid color format: " + colorString);
-            }
-        }
+        final Color color = node.node(COLOR).get(Color.class);
 
         final Registry<@NotNull PotionType> potionRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.POTION);
         final String basePotionTypeString = node.node(BASE_POTION_TYPE).getString(PotionType.MUNDANE.name());

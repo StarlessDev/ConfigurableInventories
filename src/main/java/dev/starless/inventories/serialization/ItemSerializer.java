@@ -1,6 +1,8 @@
-package dev.starless.inventories.config;
+package dev.starless.inventories.serialization;
 
 import dev.starless.inventories.ConfigurableItem;
+import dev.starless.inventories.ConfigurablePotionMeta;
+import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.Material;
@@ -27,6 +29,7 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
     private static final String NODE_LORE = "lore";
     private static final String NODE_FLAGS = "flags";
     private static final String NODE_ENCHANTMENTS = "enchantments";
+    private static final String NODE_POTION_META = "potion-meta";
 
     @Override
     public ConfigurableItem deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
@@ -94,6 +97,11 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
             builder.enchantments(enchantments);
         }
 
+        final ConfigurationNode potionMetaNode = node.node(NODE_POTION_META);
+        if (!potionMetaNode.virtual()) {
+            builder.potionMeta(potionMetaNode.get(ConfigurablePotionMeta.class));
+        }
+
         return builder.build();
     }
 
@@ -135,6 +143,10 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
                 enchantments.put(enchantment.getKey().getKey(), level);
             });
             node.node(NODE_ENCHANTMENTS).set(enchantments);
+        }
+
+        if (item.getPotionMeta() != null) {
+            node.node(NODE_POTION_META).set(TypeToken.get(ConfigurablePotionMeta.class), item.getPotionMeta());
         }
     }
 }

@@ -10,6 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -217,6 +218,18 @@ public class ConfigurableItem {
         }
 
         /**
+         * Sets the potion meta for the item.
+         * Note that the item material must be a potion type.
+         *
+         * @param potionMeta the {@link ConfigurablePotionMeta} to set
+         * @return this builder
+         */
+        public Builder potionMeta(final ConfigurablePotionMeta potionMeta) {
+            item.setPotionMeta(potionMeta);
+            return this;
+        }
+
+        /**
          * @return a {@link ConfigurableItem} instance
          */
         public ConfigurableItem build() {
@@ -229,6 +242,8 @@ public class ConfigurableItem {
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
+
+    private ConfigurablePotionMeta potionMeta = null;
 
     private int amount = DEFAULT_AMOUNT;
     private int customModelData = DEFAULT_CUSTOM_MODEL_DATA;
@@ -246,7 +261,8 @@ public class ConfigurableItem {
                 .flags(this.getFlags().toArray(new ItemFlag[0]))
                 .enchantments(this.getEnchantments())
                 .amount(this.getAmount())
-                .modelData(this.getCustomModelData());
+                .modelData(this.getCustomModelData())
+                .potionMeta(this.getPotionMeta());
     }
 
     /**
@@ -278,6 +294,10 @@ public class ConfigurableItem {
 
             if (customModelData != -1) {
                 meta.setCustomModelData(customModelData);
+            }
+
+            if (meta instanceof PotionMeta potion && potionMeta != null) {
+                potionMeta.apply(potion);
             }
         });
         return is;

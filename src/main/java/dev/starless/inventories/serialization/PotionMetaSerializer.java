@@ -39,25 +39,7 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
         final Registry<@NotNull PotionType> potionRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.POTION);
         final String basePotionTypeString = node.node(BASE_POTION_TYPE).getString(PotionType.MUNDANE.name());
         final PotionType basePotionType = potionRegistry.get(NamespacedKey.minecraft(basePotionTypeString.toLowerCase()));
-
-        final Registry<@NotNull PotionEffectType> effectRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.MOB_EFFECT);
-        final List<PotionEffect> effects = node.node(EFFECTS).getList(String.class, Collections.emptyList())
-                .stream()
-                .map(effectString -> {
-                    String[] parts = effectString.split(",");
-                    if (parts.length < 3) {
-                        return null;
-                    }
-
-                    final PotionEffectType effectType = effectRegistry.get(NamespacedKey.minecraft(parts[0].toLowerCase()));
-                    if (effectType == null) return null;
-
-                    final int duration = Integer.parseInt(parts[1]) * 20;
-                    final int amplifier = Integer.parseInt(parts[2]) - 1;
-                    return new PotionEffect(effectType, duration, amplifier);
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        final List<PotionEffect> effects = node.node(EFFECTS).getList(PotionEffect.class, Collections.emptyList());
 
         return ConfigurablePotionMeta.builder()
                 .color(color)
@@ -68,7 +50,9 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
     }
 
     @Override
-    public void serialize(@NotNull Type type, ConfigurablePotionMeta obj, @NotNull ConfigurationNode node) throws SerializationException {
+    public void serialize(@NotNull Type type,
+                          ConfigurablePotionMeta obj,
+                          @NotNull ConfigurationNode node) throws SerializationException {
         if (obj == null) {
             node.raw(null);
             return;
@@ -87,16 +71,7 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
         }
 
         if (!obj.getEffects().isEmpty()) {
-            List<String> effectsList = obj.getEffects().stream()
-                    .map(effect -> {
-                        final String effectType = effect.getType().getKey().getKey();
-                        final int duration = effect.getDuration() / 20;
-                        final int amplifier = effect.getAmplifier() + 1;
-                        return effectType + ", " + duration + ", " + amplifier;
-                    })
-                    .collect(Collectors.toList());
-            node.node(EFFECTS).set(effectsList);
+            node.node(EFFECTS).set(obj.getEffects());
         }
     }
 }
-

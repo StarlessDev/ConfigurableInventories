@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.starless"
-version = "1.25"
+version = "1.25.1"
 
 repositories {
     mavenCentral()

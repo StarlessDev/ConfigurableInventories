@@ -54,6 +54,17 @@ public class ConfigurableInventory {
         }
 
         /**
+         * Sets the items of the inventory.
+         *
+         * @param items the items to set
+         * @return this builder
+         */
+        public Builder items(Map<String, ConfigurableItem> items) {
+            inventory.setItems(items);
+            return this;
+        }
+
+        /**
          * Builds and returns the configured inventory.
          *
          * @return a {@link ConfigurableInventory} instance

@@ -167,11 +167,10 @@ public class ItemType implements PropertyType<ConfigurableItem> {
             map.put("flags", exportedFlags);
         }
 
-        final Map<String, Integer> enchantments = new HashMap<>();
+        final Map<String, String> enchantments = new HashMap<>();
         if (item.getEnchantments() != null) {
             item.getEnchantments().forEach((enchantment, level) -> {
-                //noinspection deprecation
-                enchantments.put(enchantment.getKey().getKey(), level);
+                enchantments.put(enchantment.getKey().getKey(), String.valueOf(level));
             });
         }
 

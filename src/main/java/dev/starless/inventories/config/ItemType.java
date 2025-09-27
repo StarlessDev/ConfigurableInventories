@@ -24,6 +24,14 @@ import java.util.stream.Collectors;
  */
 public class ItemType implements PropertyType<ConfigurableItem> {
 
+    private static final String MATERIAL_NODE = "material";
+    private static final String DISPLAY_NAME_NODE = "displayName";
+    private static final String AMOUNT_NODE = "amount";
+    private static final String CUSTOM_MODEL_DATA_NODE = "customModelData";
+    private static final String LORE_NODE = "lore";
+    private static final String FLAGS_NODE = "flags";
+    private static final String ENCHANTMENTS_NODE = "enchantments";
+
     @Override
     public @Nullable ConfigurableItem convert(@Nullable Object obj,
                                               @NotNull ConvertErrorRecorder recorder) {
@@ -31,7 +39,7 @@ public class ItemType implements PropertyType<ConfigurableItem> {
             final ConfigurableItem item = new ConfigurableItem();
 
             // Get item material
-            this.readStringProperty(map.get("material"), id -> {
+            this.readStringProperty(map.get(MATERIAL_NODE), id -> {
                 Material material = null;
                 if (id != null) {
                     material = Registry.MATERIAL.get(NamespacedKey.minecraft(id.toLowerCase()));
@@ -39,20 +47,20 @@ public class ItemType implements PropertyType<ConfigurableItem> {
                 item.setMaterial(Objects.requireNonNullElse(material, Material.BARRIER));
             });
             // Other item properties
-            this.readStringProperty(map.get("displayName"), name -> {
+            this.readStringProperty(map.get(DISPLAY_NAME_NODE), name -> {
                 item.setDisplayName(Objects.requireNonNullElse(name, ""));
             });
-            this.readIntegerProperty(map.get("amount"), amount -> {
+            this.readIntegerProperty(map.get(AMOUNT_NODE), amount -> {
                 item.setAmount(Objects.requireNonNullElse(amount, 1));
             });
-            this.readIntegerProperty(map.get("customModelData"), data -> {
+            this.readIntegerProperty(map.get(CUSTOM_MODEL_DATA_NODE), data -> {
                 item.setCustomModelData(Objects.requireNonNullElse(data, -1));
             });
 
             // Set lore
-            this.readStringListProperty(map.get("lore"), item::setLore);
+            this.readStringListProperty(map.get(LORE_NODE), item::setLore);
             // Set item flags
-            this.readStringListProperty(map.get("flags"), strings -> {
+            this.readStringListProperty(map.get(FLAGS_NODE), strings -> {
                 final Set<ItemFlag> flags = strings.stream()
                         .map(str -> {
                             try {
@@ -67,7 +75,7 @@ public class ItemType implements PropertyType<ConfigurableItem> {
             });
 
             // Set enchantments
-            this.readMapProperty(map.get("enchantments"), stringObjectMap -> {
+            this.readMapProperty(map.get(ENCHANTMENTS_NODE), stringObjectMap -> {
                 final Map<Enchantment, Integer> enchantments = new HashMap<>();
                 stringObjectMap.forEach((key, value) -> {
                     if (value instanceof Integer level) {
@@ -141,30 +149,30 @@ public class ItemType implements PropertyType<ConfigurableItem> {
         final Mapper mapper = DefaultMapper.getInstance();
         final Map<String, Object> map = new HashMap<>();
         // The material should never be null
-        map.put("material", Objects.requireNonNullElse(item.getMaterial(), Material.BARRIER));
+        map.put(MATERIAL_NODE, item.getMaterial());
 
         // Export item attributes if necessary
         final String displayName = item.getDisplayName();
         if (!displayName.isBlank()) {
-            map.put("displayName", displayName);
+            map.put(DISPLAY_NAME_NODE, displayName);
         }
         final int amount = item.getAmount();
         if (amount != 1) {
-            map.put("amount", amount);
+            map.put(AMOUNT_NODE, amount);
         }
         final int customModelData = item.getCustomModelData();
         if (customModelData != -1) {
-            map.put("customModelData", customModelData);
+            map.put(CUSTOM_MODEL_DATA_NODE, customModelData);
         }
 
         // Export lists and sets
         final Object exportedLore = mapper.toExportValue(item.getLore());
         if (exportedLore != null) {
-            map.put("lore", exportedLore);
+            map.put(LORE_NODE, exportedLore);
         }
         final Object exportedFlags = mapper.toExportValue(item.getFlags());
         if (exportedFlags != null) {
-            map.put("flags", exportedFlags);
+            map.put(FLAGS_NODE, exportedFlags);
         }
 
         final Map<String, String> enchantments = new HashMap<>();
@@ -175,7 +183,7 @@ public class ItemType implements PropertyType<ConfigurableItem> {
         }
 
         if (!enchantments.isEmpty()) {
-            map.put("enchantments", enchantments);
+            map.put(ENCHANTMENTS_NODE, enchantments);
         }
 
         return map;

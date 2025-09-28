@@ -30,6 +30,7 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
     private static final String NODE_FLAGS = "flags";
     private static final String NODE_ENCHANTMENTS = "enchantments";
     private static final String NODE_POTION_META = "potion-meta";
+    private static final String NODE_UNBREAKABLE = "unbreakable";
 
     @Override
     public ConfigurableItem deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
@@ -56,6 +57,10 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
         final ConfigurationNode cmdNode = node.node(NODE_CUSTOM_MODEL_DATA);
         if (!cmdNode.virtual()) {
             builder.modelData(cmdNode.getInt(-1));
+        }
+        final ConfigurationNode unbreakableNode = node.node(NODE_UNBREAKABLE);
+        if (!unbreakableNode.virtual()) {
+            builder.unbreakable(unbreakableNode.getBoolean(false));
         }
 
         // Set lore
@@ -136,6 +141,7 @@ public class ItemSerializer implements TypeSerializer<ConfigurableItem> {
         if (item.getFlags() != null && !item.getFlags().isEmpty()) {
             node.node(NODE_FLAGS).set(item.getFlags().stream().map(Enum::name).toList());
         }
+        node.node(NODE_UNBREAKABLE).set(item.isUnbreakable());
 
         if (item.getEnchantments() != null && !item.getEnchantments().isEmpty()) {
             Map<String, Integer> enchantments = new HashMap<>();

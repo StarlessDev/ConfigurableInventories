@@ -229,6 +229,11 @@ public class ConfigurableItem {
             return this;
         }
 
+        public Builder unbreakable(final boolean unbreakable) {
+            item.setUnbreakable(unbreakable);
+            return this;
+        }
+
         /**
          * @return a {@link ConfigurableItem} instance
          */
@@ -242,6 +247,7 @@ public class ConfigurableItem {
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
+    private boolean unbreakable = false;
 
     private ConfigurablePotionMeta potionMeta = null;
 
@@ -262,7 +268,8 @@ public class ConfigurableItem {
                 .enchantments(this.getEnchantments())
                 .amount(this.getAmount())
                 .modelData(this.getCustomModelData())
-                .potionMeta(this.getPotionMeta());
+                .potionMeta(this.getPotionMeta())
+                .unbreakable(this.isUnbreakable());
     }
 
     /**
@@ -287,6 +294,7 @@ public class ConfigurableItem {
             meta.displayName(this.processString(placeholders, displayName));
             meta.lore(lore.stream().map(str -> this.processString(placeholders, str)).toList());
             meta.addItemFlags(flags.toArray(ItemFlag[]::new));
+            meta.setUnbreakable(this.isUnbreakable());
 
             enchantments.forEach((ench, level) -> {
                 meta.addEnchant(ench, level, true);

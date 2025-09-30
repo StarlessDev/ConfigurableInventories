@@ -1,4 +1,4 @@
-package dev.starless.inventories.serialization;
+package dev.starless.inventories.serialization.potion;
 
 import dev.starless.inventories.ConfigurablePotionMeta;
 import io.papermc.paper.registry.RegistryAccess;
@@ -7,7 +7,6 @@ import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -17,8 +16,6 @@ import org.spongepowered.configurate.serialize.TypeSerializer;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMeta> {
 

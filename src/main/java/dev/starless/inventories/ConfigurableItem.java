@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -229,6 +230,23 @@ public class ConfigurableItem {
             return this;
         }
 
+        /**
+         * Sets the skull meta for the item.
+         *
+         * @param skullMeta the {@link ConfigurableSkullMeta} to set
+         * @return this builder
+         */
+        public Builder skullMeta(final ConfigurableSkullMeta skullMeta) {
+            item.setSkullMeta(skullMeta);
+            return this;
+        }
+
+        /**
+         * Sets whether the item is unbreakable or not.
+         *
+         * @param unbreakable true if the item should be unbreakable, false otherwise
+         * @return this builder
+         */
         public Builder unbreakable(final boolean unbreakable) {
             item.setUnbreakable(unbreakable);
             return this;
@@ -250,6 +268,7 @@ public class ConfigurableItem {
     private boolean unbreakable = false;
 
     private ConfigurablePotionMeta potionMeta = null;
+    private ConfigurableSkullMeta skullMeta = null;
 
     private int amount = DEFAULT_AMOUNT;
     private int customModelData = DEFAULT_CUSTOM_MODEL_DATA;
@@ -269,6 +288,7 @@ public class ConfigurableItem {
                 .amount(this.getAmount())
                 .modelData(this.getCustomModelData())
                 .potionMeta(this.getPotionMeta())
+                .skullMeta(this.getSkullMeta())
                 .unbreakable(this.isUnbreakable());
     }
 
@@ -306,6 +326,9 @@ public class ConfigurableItem {
 
             if (meta instanceof PotionMeta potion && potionMeta != null) {
                 potionMeta.apply(potion);
+            }
+            if (meta instanceof SkullMeta skull && skullMeta != null) {
+                skullMeta.apply(skull);
             }
         });
         return is;

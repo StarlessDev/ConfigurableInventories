@@ -1,4 +1,4 @@
-package dev.starless.inventories.serialization;
+package dev.starless.inventories.serialization.potion;
 
 import org.bukkit.potion.PotionEffect;
 import org.checkerframework.checker.nullness.qual.Nullable;

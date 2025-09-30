@@ -1,4 +1,4 @@
-package dev.starless.inventories.serialization;
+package dev.starless.inventories.serialization.misc;
 
 import org.bukkit.Color;
 import org.checkerframework.checker.nullness.qual.Nullable;

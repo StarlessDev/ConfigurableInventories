@@ -43,6 +43,17 @@ public class ConfigurableInventory {
             return this;
         }
 
+        public Builder structure(final String... structure) {
+            return this.structure((List.of(structure)));
+        }
+
+        public Builder structure(final List<String> structure) {
+            inventory.setStructure(structure.stream()
+                    .map(str -> str.replaceAll(" ", ""))
+                    .toList());
+            return this;
+        }
+
         /**
          * Adds an item to the inventory with the specified key.
          *

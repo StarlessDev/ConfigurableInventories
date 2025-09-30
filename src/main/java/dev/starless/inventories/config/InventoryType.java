@@ -21,12 +21,12 @@ public class InventoryType implements PropertyType<ConfigurableInventory> {
         if (object instanceof Map<?, ?> map) {
             String title = Objects.toString(map.get("title"), "");
 
-            final Map<String, ConfigurableItem> items = new HashMap<>();
+            final Map<Character, ConfigurableItem> items = new HashMap<>();
             if (map.get("items") instanceof Map<?, ?> itemsMap) {
                 for (Map.Entry<?, ?> entry : itemsMap.entrySet()) {
                     final ConfigurableItem item = itemType.convert(entry.getValue(), errorRecorder);
                     if (item != null) {
-                        items.put(entry.getKey().toString(), item);
+                        items.put((char) entry.getKey(), item);
                     }
                 }
             }
@@ -48,8 +48,8 @@ public class InventoryType implements PropertyType<ConfigurableInventory> {
         Map<String, Object> map = new HashMap<>();
         map.put("title", value.getTitle());
 
-        Map<String, Object> itemsMap = new HashMap<>();
-        for (Map.Entry<String, ConfigurableItem> entry : value.getItems().entrySet()) {
+        Map<Character, Object> itemsMap = new HashMap<>();
+        for (Map.Entry<Character, ConfigurableItem> entry : value.getItems().entrySet()) {
             itemsMap.put(entry.getKey(), itemType.toExportValue(entry.getValue()));
         }
         map.put("items", itemsMap);

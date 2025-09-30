@@ -3,7 +3,9 @@ package dev.starless.inventories;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +50,7 @@ public class ConfigurableInventory {
          * @param item the {@link ConfigurableItem} to add
          * @return this builder
          */
-        public Builder item(String key, ConfigurableItem item) {
+        public Builder item(Character key, ConfigurableItem item) {
             inventory.getItems().put(key, item);
             return this;
         }
@@ -59,7 +61,7 @@ public class ConfigurableInventory {
          * @param items the items to set
          * @return this builder
          */
-        public Builder items(Map<String, ConfigurableItem> items) {
+        public Builder items(Map<Character, ConfigurableItem> items) {
             inventory.setItems(items);
             return this;
         }
@@ -74,7 +76,8 @@ public class ConfigurableInventory {
         }
     }
 
-    private Map<String, ConfigurableItem> items = new HashMap<>();
+    private Map<Character, ConfigurableItem> items = new HashMap<>();
+    private List<String> structure = new ArrayList<>();
     private String title;
 
     /**
@@ -84,6 +87,6 @@ public class ConfigurableInventory {
      * @return the {@link ConfigurableItem} associated with the key or null if not found
      */
     public ConfigurableItem getItem(char character) {
-        return items.get(String.valueOf(character)).copy();
+        return items.get(character).copy();
     }
 }

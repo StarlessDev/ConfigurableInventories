@@ -7,9 +7,7 @@ import dev.starless.inventories.ConfigurableItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class InventoryType implements PropertyType<ConfigurableInventory> {
 
@@ -19,7 +17,16 @@ public class InventoryType implements PropertyType<ConfigurableInventory> {
     public @Nullable ConfigurableInventory convert(@Nullable Object object,
                                                    @NotNull ConvertErrorRecorder errorRecorder) {
         if (object instanceof Map<?, ?> map) {
-            String title = Objects.toString(map.get("title"), "");
+            final String title = Objects.toString(map.get("title"), "");
+            final List<String> structure;
+            if (map.get("structure") instanceof List<?> list) {
+                structure = list.stream()
+                        .filter(Objects::nonNull)
+                        .map(Objects::toString)
+                        .toList();
+            } else {
+                structure = Collections.emptyList();
+            }
 
             final Map<Character, ConfigurableItem> items = new HashMap<>();
             if (map.get("items") instanceof Map<?, ?> itemsMap) {
@@ -34,6 +41,7 @@ public class InventoryType implements PropertyType<ConfigurableInventory> {
             return ConfigurableInventory.builder()
                     .title(title)
                     .items(items)
+                    .structure(structure)
                     .build();
         }
         return null;
@@ -47,6 +55,7 @@ public class InventoryType implements PropertyType<ConfigurableInventory> {
 
         Map<String, Object> map = new HashMap<>();
         map.put("title", value.getTitle());
+        map.put("structure", value.getStructure());
 
         Map<String, Object> itemsMap = new HashMap<>();
         for (Map.Entry<Character, ConfigurableItem> entry : value.getItems().entrySet()) {

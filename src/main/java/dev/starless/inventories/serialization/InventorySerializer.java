@@ -10,11 +10,13 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.Map;
 
 public class InventorySerializer implements TypeSerializer<ConfigurableInventory> {
 
     private static final String NODE_TITLE = "title";
+    private static final String NODE_STRUCTURE = "structure";
     private static final String NODE_ITEMS = "items";
 
     @Override
@@ -25,6 +27,12 @@ public class InventorySerializer implements TypeSerializer<ConfigurableInventory
         final ConfigurationNode titleNode = node.node(NODE_TITLE);
         if (!titleNode.virtual()) {
             builder.title(titleNode.getString());
+        }
+
+        // Set structure
+        final ConfigurationNode structureNode = node.node(NODE_STRUCTURE);
+        if (structureNode.isList()) {
+            builder.structure(structureNode.getList(String.class, Collections.emptyList()));
         }
 
         // Set items
@@ -56,6 +64,9 @@ public class InventorySerializer implements TypeSerializer<ConfigurableInventory
         if (inventory.getTitle() != null) {
             node.node(NODE_TITLE).set(inventory.getTitle());
         }
+
+        // Set structure
+        node.node(NODE_STRUCTURE).set(inventory.getStructure());
 
         // Set items
         if (inventory.getItems() != null && !inventory.getItems().isEmpty()) {

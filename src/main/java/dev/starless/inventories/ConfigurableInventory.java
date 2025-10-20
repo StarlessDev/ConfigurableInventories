@@ -3,7 +3,9 @@ package dev.starless.inventories;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +43,17 @@ public class ConfigurableInventory {
             return this;
         }
 
+        public Builder structure(final String... structure) {
+            return this.structure((List.of(structure)));
+        }
+
+        public Builder structure(final List<String> structure) {
+            inventory.setStructure(structure.stream()
+                    .map(str -> str.replaceAll(" ", ""))
+                    .toList());
+            return this;
+        }
+
         /**
          * Adds an item to the inventory with the specified key.
          *
@@ -64,6 +77,7 @@ public class ConfigurableInventory {
     }
 
     private Map<String, ConfigurableItem> items = new HashMap<>();
+    private List<String> structure = new ArrayList<>();
     private String title;
 
     /**

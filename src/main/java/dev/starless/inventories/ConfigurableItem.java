@@ -253,6 +253,18 @@ public class ConfigurableItem {
         }
 
         /**
+         * Sets whether the item should show the enchantment glint or not,
+         * regardless of whether it has enchantments.
+         *
+         * @param override true to show the glint, false otherwise
+         * @return this builder
+         */
+        public Builder enchantmentGlintOverride(final boolean override) {
+            item.setEnchantmentGlintOverride(override);
+            return this;
+        }
+
+        /**
          * @return a {@link ConfigurableItem} instance
          */
         public ConfigurableItem build() {
@@ -266,6 +278,7 @@ public class ConfigurableItem {
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
     private boolean unbreakable = false;
+    private boolean enchantmentGlintOverride = false;
 
     private ConfigurablePotionMeta potionMeta = null;
     private ConfigurableSkullMeta skullMeta = null;
@@ -289,7 +302,8 @@ public class ConfigurableItem {
                 .modelData(this.getCustomModelData())
                 .potionMeta(this.getPotionMeta())
                 .skullMeta(this.getSkullMeta())
-                .unbreakable(this.isUnbreakable());
+                .unbreakable(this.isUnbreakable())
+                .enchantmentGlintOverride(this.isEnchantmentGlintOverride());
     }
 
     /**
@@ -315,6 +329,7 @@ public class ConfigurableItem {
             meta.lore(lore.stream().map(str -> this.processString(placeholders, str)).toList());
             meta.addItemFlags(flags.toArray(ItemFlag[]::new));
             meta.setUnbreakable(this.isUnbreakable());
+            meta.setEnchantmentGlintOverride(this.isEnchantmentGlintOverride());
 
             enchantments.forEach((ench, level) -> {
                 meta.addEnchant(ench, level, true);

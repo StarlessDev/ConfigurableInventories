@@ -273,7 +273,7 @@ public class ConfigurableItem {
     }
 
     private @NotNull Material material;
-    private @NotNull String displayName;
+    private String displayName;
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private List<String> lore = new ArrayList<>();
     private Set<ItemFlag> flags = new HashSet<>();
@@ -325,7 +325,9 @@ public class ConfigurableItem {
     public ItemStack asItemStack(List<ItemPlaceholder> placeholders) {
         final ItemStack is = new ItemStack(material, amount);
         is.editMeta(meta -> {
-            meta.displayName(this.processString(placeholders, displayName));
+            if (displayName != null) {
+                meta.displayName(this.processString(placeholders, displayName));
+            }
             meta.lore(lore.stream().map(str -> this.processString(placeholders, str)).toList());
             meta.addItemFlags(flags.toArray(ItemFlag[]::new));
             meta.setUnbreakable(this.isUnbreakable());

@@ -7,7 +7,7 @@ paper = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.2.0"
 
 # Gradle Plugins
-lombok = "8.11"
+lombok = "9.2.0"
 
 [libraries]
 

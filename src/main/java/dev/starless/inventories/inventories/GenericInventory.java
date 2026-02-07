@@ -226,13 +226,22 @@ public abstract class GenericInventory<G extends Gui, S extends Gui.Builder<G, S
     }
 
     /**
+     * Gets the structure of the inventory as an array of strings.
+     *
+     * @return the inventory structure
+     */
+    public String[] getStructure(final Player player) {
+        return inventory.getStructure().toArray(new String[0]);
+    }
+
+    /**
      * Shows the inventory to the specified player.
      * This method compiles the GUI, creates the window, and opens it for the player.
      *
      * @param player the player to show the inventory to
      */
     public void show(final Player player) {
-        final S builder = this.getBuilder().setStructure(inventory.getStructure().toArray(new String[0]));
+        final S builder = this.getBuilder().setStructure(this.getStructure(player));
         this.compileGui(player, builder);
         this.gui = builder.build();
 

@@ -16,17 +16,10 @@ repositories {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "mineclub"
-            url = uri("https://repo.starless.dev/releases")
-            credentials(PasswordCredentials::class)
-        }
-    }
-
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "inventories"
+            groupId = "com.github.StarlessDev"
+            artifactId = "ConfigurableInventories"
 
             from(components["java"])
         }

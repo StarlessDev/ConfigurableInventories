@@ -19,7 +19,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.github.StarlessDev"
-            artifactId = "ConfigurableInventories"
+            artifactId = "inventories"
 
             from(components["java"])
         }

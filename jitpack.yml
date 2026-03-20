@@ -1,2 +1,5 @@
 jdk:
   - 21
+
+before_install:
+  - sdk install gradle 9.3.0

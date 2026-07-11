@@ -27,9 +27,7 @@ dependencies {
     compileOnly(libs.paper)
     api(libs.configurate)
     api(libs.adventure.serializers) {
-        // Exclude transitive adventure libraries from the shaded jar
         exclude(group = "net.kyori", module = "adventure-api")
-        exclude(group = "net.kyori", module = "adventure-key")
     }
 }
 

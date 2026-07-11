@@ -9,8 +9,6 @@ import it.unimi.dsi.fastutil.booleans.BooleanArrayList;
 import it.unimi.dsi.fastutil.booleans.BooleanList;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import it.unimi.dsi.fastutil.floats.FloatList;
-import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Color;
@@ -34,9 +32,7 @@ import java.util.function.Consumer;
  * just using the setters.
  */
 
-@Setter
-@Getter
-public class ConfigurableItem {
+public final class ConfigurableItem {
 
     /**
      * Returns a ConfigurableItem builder class.
@@ -603,5 +599,125 @@ public class ConfigurableItem {
             component = placeholder.apply(component);
         }
         return component.decoration(TextDecoration.ITALIC, false);
+    }
+
+    public @NotNull Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(@NotNull Material material) {
+        this.material = material;
+    }
+
+    public @Nullable Component getName() {
+        return name;
+    }
+
+    public void setName(@Nullable Component name) {
+        this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Map<Enchantment, Integer> getEnchantments() {
+        return enchantments;
+    }
+
+    public void setEnchantments(Map<Enchantment, Integer> enchantments) {
+        this.enchantments = enchantments;
+    }
+
+    public List<Component> getLore() {
+        return lore;
+    }
+
+    public void setLore(List<Component> lore) {
+        this.lore = lore;
+    }
+
+    public Set<ItemFlag> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Set<ItemFlag> flags) {
+        this.flags = flags;
+    }
+
+    public boolean isUnbreakable() {
+        return unbreakable;
+    }
+
+    public void setUnbreakable(boolean unbreakable) {
+        this.unbreakable = unbreakable;
+    }
+
+    public boolean isGlint() {
+        return glint;
+    }
+
+    public void setGlint(boolean glint) {
+        this.glint = glint;
+    }
+
+    public @Nullable FloatList getCustomModelDataFloats() {
+        return customModelDataFloats;
+    }
+
+    public void setCustomModelDataFloats(@Nullable FloatList customModelDataFloats) {
+        this.customModelDataFloats = customModelDataFloats;
+    }
+
+    public @Nullable BooleanList getCustomModelDataBooleans() {
+        return customModelDataBooleans;
+    }
+
+    public void setCustomModelDataBooleans(@Nullable BooleanList customModelDataBooleans) {
+        this.customModelDataBooleans = customModelDataBooleans;
+    }
+
+    public @Nullable List<String> getCustomModelDataStrings() {
+        return customModelDataStrings;
+    }
+
+    public void setCustomModelDataStrings(@Nullable List<String> customModelDataStrings) {
+        this.customModelDataStrings = customModelDataStrings;
+    }
+
+    public @Nullable List<Color> getCustomModelDataColors() {
+        return customModelDataColors;
+    }
+
+    public void setCustomModelDataColors(@Nullable List<Color> customModelDataColors) {
+        this.customModelDataColors = customModelDataColors;
+    }
+
+    public @Nullable ConfigurablePotionComponent getPotionComponent() {
+        return potionComponent;
+    }
+
+    public void setPotionComponent(@Nullable ConfigurablePotionComponent potionComponent) {
+        this.potionComponent = potionComponent;
+    }
+
+    public @Nullable ConfigurableProfileComponent getProfileComponent() {
+        return profileComponent;
+    }
+
+    public void setProfileComponent(@Nullable ConfigurableProfileComponent profileComponent) {
+        this.profileComponent = profileComponent;
+    }
+
+    public @Nullable Consumer<ItemStack> getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(@Nullable Consumer<ItemStack> modifier) {
+        this.modifier = modifier;
     }
 }

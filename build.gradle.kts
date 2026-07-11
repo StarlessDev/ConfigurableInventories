@@ -2,8 +2,6 @@ plugins {
     java
     `java-library`
     `maven-publish`
-
-    alias(libs.plugins.lombok)
 }
 
 group = "dev.starless"
@@ -18,7 +16,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.github.StarlessDev"
-            artifactId = "inventories-configurate"
+            artifactId = "ConfigurableInventories"
 
             from(components["java"])
         }

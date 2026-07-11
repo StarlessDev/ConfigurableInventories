@@ -3,8 +3,6 @@ package dev.starless.inventories;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -12,8 +10,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
 @SuppressWarnings("UnstableApiUsage")
 public class ConfigurableProfileComponent {
 
@@ -88,5 +84,29 @@ public class ConfigurableProfileComponent {
             builder.addProperties(properties);
         }
         return builder.build();
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<ProfileProperty> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<ProfileProperty> properties) {
+        this.properties = properties;
     }
 }

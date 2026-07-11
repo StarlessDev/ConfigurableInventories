@@ -6,8 +6,6 @@ metadata.format.version = "1.1"
 paper = "1.21.4-R0.1-SNAPSHOT"
 adventure = "4.26.1"
 configurate = "4.2.0"
-# Gradle Plugins
-lombok = "9.2.0"
 
 [libraries]
 
@@ -17,5 +15,3 @@ configurate = { group = "org.spongepowered", name = "configurate-yaml", version.
 adventure-serializers = { group = "net.kyori", name = "adventure-serializer-configurate4", version.ref = "adventure" }
 
 [plugins]
-
-lombok = { id = "io.freefair.lombok", version.ref = "lombok"}

@@ -1,7 +1,5 @@
 package dev.starless.inventories;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
@@ -17,9 +15,7 @@ import java.util.Map;
  * You can use the builder to create an instance of this class.
  */
 
-@Setter
-@Getter
-public class ConfigurableInventory {
+public final class ConfigurableInventory {
 
     public static Builder builder() {
         return new Builder();
@@ -99,5 +95,29 @@ public class ConfigurableInventory {
      */
     public String[] getStructureArray() {
         return structure.toArray(String[]::new);
+    }
+
+    public Map<String, ConfigurableItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Map<String, ConfigurableItem> items) {
+        this.items = items;
+    }
+
+    public List<String> getStructure() {
+        return structure;
+    }
+
+    public void setStructure(List<String> structure) {
+        this.structure = structure;
+    }
+
+    public Component getTitle() {
+        return title;
+    }
+
+    public void setTitle(Component title) {
+        this.title = title;
     }
 }

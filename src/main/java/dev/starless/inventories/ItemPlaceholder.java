@@ -1,24 +1,14 @@
 package dev.starless.inventories;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Represents a placeholder that can be used to replace
  * specific text patterns in strings.
  */
-@Getter
-@Setter
-@Accessors(fluent = true)
-@RequiredArgsConstructor
 public class ItemPlaceholder {
 
     private final String target;
@@ -26,6 +16,11 @@ public class ItemPlaceholder {
 
     private String prefix = "%";
     private String suffix = "%";
+
+    public ItemPlaceholder(String target, Object replacement) {
+        this.target = target;
+        this.replacement = replacement;
+    }
 
     /**
      * Applies the placeholder replacement to the given input component.
@@ -42,5 +37,29 @@ public class ItemPlaceholder {
             builder.replacement(Objects.toString(replacement));
         }
         return component.replaceText(builder.build());
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public Object getReplacement() {
+        return replacement;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
     }
 }

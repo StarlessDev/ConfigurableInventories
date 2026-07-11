@@ -2,8 +2,6 @@ package dev.starless.inventories;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -12,8 +10,6 @@ import org.bukkit.potion.PotionType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @SuppressWarnings("UnstableApiUsage")
 public class ConfigurablePotionComponent {
 
@@ -92,5 +88,37 @@ public class ConfigurablePotionComponent {
             builder.addCustomEffect(effect);
         }
         return builder.build();
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PotionType getType() {
+        return type;
+    }
+
+    public void setType(PotionType type) {
+        this.type = type;
+    }
+
+    public List<PotionEffect> getEffects() {
+        return effects;
+    }
+
+    public void setEffects(List<PotionEffect> effects) {
+        this.effects = effects;
     }
 }

@@ -1,7 +1,6 @@
 package dev.starless.inventories.i18n;
 
 import com.google.gson.stream.JsonReader;
-import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
@@ -49,8 +48,11 @@ public class I18n {
         }
     };
 
-    @Setter
     private Function<Player, Locale> localeFunction = Player::locale;
+
+    public void setLocaleFunction(Function<Player, Locale> localeFunction) {
+        this.localeFunction = localeFunction;
+    }
 
     /**
      * Gets the locale for the given player.

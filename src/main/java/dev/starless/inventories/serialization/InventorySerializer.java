@@ -3,6 +3,7 @@ package dev.starless.inventories.serialization;
 import dev.starless.inventories.ConfigurableInventory;
 import dev.starless.inventories.ConfigurableItem;
 import io.leangen.geantyref.TypeToken;
+import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -26,7 +27,7 @@ public class InventorySerializer implements TypeSerializer<ConfigurableInventory
         // Set title
         final ConfigurationNode titleNode = node.node(NODE_TITLE);
         if (!titleNode.virtual()) {
-            builder.title(titleNode.getString());
+            builder.title(titleNode.get(Component.class));
         }
 
         // Set structure
@@ -62,7 +63,7 @@ public class InventorySerializer implements TypeSerializer<ConfigurableInventory
 
         // Set title
         if (inventory.getTitle() != null) {
-            node.node(NODE_TITLE).set(inventory.getTitle());
+            node.node(NODE_TITLE).set(Component.class, inventory.getTitle());
         }
 
         // Set structure

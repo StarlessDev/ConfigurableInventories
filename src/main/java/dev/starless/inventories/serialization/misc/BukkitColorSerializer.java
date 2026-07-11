@@ -13,7 +13,7 @@ public class BukkitColorSerializer implements TypeSerializer<Color> {
 
     @Override
     public Color deserialize(@NotNull Type type, @NotNull ConfigurationNode node) {
-        return Color.fromRGB(node.getInt(0xffffff));
+        return Color.fromARGB(node.getInt(0xffffff));
     }
 
     @Override
@@ -24,7 +24,6 @@ public class BukkitColorSerializer implements TypeSerializer<Color> {
             node.raw(null);
             return;
         }
-
-        node.set(Integer.toHexString(obj.asRGB()));
+        node.set(Integer.toHexString(obj.asARGB()));
     }
 }

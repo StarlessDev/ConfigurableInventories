@@ -2,6 +2,7 @@ package dev.starless.inventories;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class ConfigurableInventory {
          * @param title the title to set
          * @return this builder
          */
-        public Builder title(final String title) {
+        public Builder title(final Component title) {
             inventory.setTitle(title);
             return this;
         }
@@ -78,7 +79,7 @@ public class ConfigurableInventory {
 
     private Map<String, ConfigurableItem> items = new HashMap<>();
     private List<String> structure = new ArrayList<>();
-    private String title;
+    private Component title;
 
     /**
      * Retrieves an item from the inventory by its key.
@@ -88,5 +89,15 @@ public class ConfigurableInventory {
      */
     public ConfigurableItem getItem(char character) {
         return items.get(String.valueOf(character)).copy();
+    }
+
+    /**
+     * Returns the structure in array for instead of list.
+     * Useful for libraries not supporting lists.
+     *
+     * @return an array of strings
+     */
+    public String[] getStructureArray() {
+        return structure.toArray(String[]::new);
     }
 }

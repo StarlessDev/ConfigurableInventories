@@ -1,6 +1,6 @@
 package dev.starless.inventories.serialization.potion;
 
-import dev.starless.inventories.ConfigurablePotionMeta;
+import dev.starless.inventories.ConfigurablePotionComponent;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.Color;
@@ -17,15 +17,15 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMeta> {
+public class PotionComponentSerializer implements TypeSerializer<ConfigurablePotionComponent> {
 
     private static final String COLOR = "color";
     private static final String CUSTOM_POTION_NAME = "custom-potion-name";
-    private static final String BASE_POTION_TYPE = "base-potion-type";
+    private static final String BASE_POTION_TYPE = "potion-type";
     private static final String EFFECTS = "effects";
 
     @Override
-    public ConfigurablePotionMeta deserialize(@NotNull Type type, ConfigurationNode node) throws SerializationException {
+    public ConfigurablePotionComponent deserialize(@NotNull Type type, ConfigurationNode node) throws SerializationException {
         if (node.virtual()) {
             return null;
         }
@@ -38,17 +38,17 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
         final PotionType basePotionType = potionRegistry.get(NamespacedKey.minecraft(basePotionTypeString.toLowerCase()));
         final List<PotionEffect> effects = node.node(EFFECTS).getList(PotionEffect.class, Collections.emptyList());
 
-        return ConfigurablePotionMeta.builder()
+        return ConfigurablePotionComponent.builder()
                 .color(color)
-                .customPotionName(customPotionName)
-                .basePotionType(basePotionType)
-                .effects(effects)
+                .name(customPotionName)
+                .type(basePotionType)
+                .addEffects(effects)
                 .build();
     }
 
     @Override
     public void serialize(@NotNull Type type,
-                          ConfigurablePotionMeta obj,
+                          ConfigurablePotionComponent obj,
                           @NotNull ConfigurationNode node) throws SerializationException {
         if (obj == null) {
             node.raw(null);
@@ -56,15 +56,15 @@ public class PotionMetaSerializer implements TypeSerializer<ConfigurablePotionMe
         }
 
         if (obj.getColor() != null) {
-            node.node(COLOR).set("#" + Integer.toHexString(obj.getColor().asRGB()));
+            node.node(COLOR).set(obj.getColor());
         }
 
-        if (obj.getCustomPotionName() != null) {
-            node.node(CUSTOM_POTION_NAME).set(obj.getCustomPotionName());
+        if (obj.getName() != null) {
+            node.node(CUSTOM_POTION_NAME).set(obj.getName());
         }
 
-        if (obj.getBasePotionType() != null) {
-            node.node(BASE_POTION_TYPE).set(obj.getBasePotionType().name());
+        if (obj.getType() != null) {
+            node.node(BASE_POTION_TYPE).set(obj.getType().name());
         }
 
         if (!obj.getEffects().isEmpty()) {

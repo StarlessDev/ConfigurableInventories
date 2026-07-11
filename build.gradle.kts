@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.starless"
-version = "1.25.7"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,12 @@ publishing {
 
 dependencies {
     compileOnly(libs.paper)
-    compileOnly(libs.configurate)
+    api(libs.configurate)
+    api(libs.adventure.serializers) {
+        // Exclude transitive adventure libraries from the shaded jar
+        exclude(group = "net.kyori", module = "adventure-api")
+        exclude(group = "net.kyori", module = "adventure-key")
+    }
 }
 
 java {

@@ -4,7 +4,6 @@ metadata.format.version = "1.1"
 
 # CompileOnly dependencies
 paper = "1.21.4-R0.1-SNAPSHOT"
-adventure = "4.26.1"
 configurate = "4.2.0"
 
 [libraries]
@@ -12,6 +11,5 @@ configurate = "4.2.0"
 # CompileOnly Dependencies
 paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
 configurate = { group = "org.spongepowered", name = "configurate-yaml", version.ref = "configurate" }
-adventure-serializers = { group = "net.kyori", name = "adventure-serializer-configurate4", version.ref = "adventure" }
 
 [plugins]

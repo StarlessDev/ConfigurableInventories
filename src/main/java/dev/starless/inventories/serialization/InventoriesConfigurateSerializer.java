@@ -12,7 +12,7 @@ import dev.starless.inventories.serialization.potion.PotionEffectSerializer;
 import dev.starless.inventories.serialization.profile.ProfileComponentSerializer;
 import dev.starless.inventories.serialization.profile.ProfilePropertySerializer;
 import io.papermc.paper.datacomponent.DataComponentType;
-import net.kyori.adventure.serializer.configurate4.ConfigurateComponentSerializer;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.potion.PotionEffect;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -30,7 +30,7 @@ public final class InventoriesConfigurateSerializer {
 
     private TypeSerializerCollection createCollection() {
         return TypeSerializerCollection.defaults().childBuilder()
-                .registerAll(ConfigurateComponentSerializer.configurate().serializers())
+                .register(Component.class, new ComponentSerializer())
                 .register(ConfigurableInventory.class, new InventorySerializer())
                 .register(ConfigurableItem.class, new ItemSerializer())
                 .register(ConfigurablePotionComponent.class, new PotionComponentSerializer())
